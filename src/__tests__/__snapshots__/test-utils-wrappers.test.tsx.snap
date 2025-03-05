@@ -1,0 +1,118 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Generate test utils ElementWrapper > 'dom' ElementWrapper matches the snapshot 1`] = `
+"
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+import { ElementWrapper } from '@cloudscape-design/test-utils-core/dom';
+import { appendSelector } from '@cloudscape-design/test-utils-core/utils';
+
+export { ElementWrapper };
+
+import SampleWrapper from './sample';
+
+
+export { SampleWrapper };
+
+declare module '@cloudscape-design/test-utils-core/dist/dom' {
+   interface ElementWrapper {
+    
+/**
+ * Returns the wrapper of the first Sample that matches the specified CSS selector.
+ * If no CSS selector is specified, returns the wrapper of the first Sample.
+ * If no matching Sample is found, returns \`null\`.
+ *
+ * @param {string} [selector] CSS Selector
+ * @returns {SampleWrapper | null}
+ */
+findSample(selector?: string): SampleWrapper | null;
+
+/**
+ * Returns an array of Sample wrapper that matches the specified CSS selector.
+ * If no CSS selector is specified, returns all of the Samples inside the current wrapper.
+ * If no matching Sample is found, returns an empty array.
+ *
+ * @param {string} [selector] CSS Selector
+ * @returns {Array<SampleWrapper>}
+ */
+findAllSamples(selector?: string): Array<SampleWrapper>;
+   }
+}
+
+
+ElementWrapper.prototype.findSample = function(selector) {
+  const rootSelector = \`.\${SampleWrapper.rootSelector}\`;
+  // casting to 'any' is needed to avoid this issue with generics
+  // https://github.com/microsoft/TypeScript/issues/29132
+  return (this as any).findComponent(selector ? appendSelector(selector, rootSelector) : rootSelector, SampleWrapper);
+};
+
+ElementWrapper.prototype.findAllSamples = function(selector) {
+  return this.findAllComponents(SampleWrapper, selector);
+};
+
+
+export default function wrapper(root: Element = document.body) {
+  if (document && document.body && !document.body.contains(root)) {
+    console.warn('[AwsUi] [test-utils] provided element is not part of the document body, interactions may work incorrectly')
+  };
+  return new ElementWrapper(root);
+}
+"
+`;
+
+exports[`Generate test utils ElementWrapper > 'selectors' ElementWrapper matches the snapshot 1`] = `
+"
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+import { ElementWrapper } from '@cloudscape-design/test-utils-core/selectors';
+import { appendSelector } from '@cloudscape-design/test-utils-core/utils';
+
+export { ElementWrapper };
+
+import SampleWrapper from './sample';
+
+
+export { SampleWrapper };
+
+declare module '@cloudscape-design/test-utils-core/dist/selectors' {
+   interface ElementWrapper {
+    
+/**
+ * Returns a wrapper that matches the Samples with the specified CSS selector.
+ * If no CSS selector is specified, returns a wrapper that matches Samples.
+ *
+ * @param {string} [selector] CSS Selector
+ * @returns {SampleWrapper}
+ */
+findSample(selector?: string): SampleWrapper;
+
+/**
+ * Returns a multi-element wrapper that matches Samples with the specified CSS selector.
+ * If no CSS selector is specified, returns a multi-element wrapper that matches Samples.
+ *
+ * @param {string} [selector] CSS Selector
+ * @returns {MultiElementWrapper<SampleWrapper>}
+ */
+findAllSamples(selector?: string): MultiElementWrapper<SampleWrapper>;
+   }
+}
+
+
+ElementWrapper.prototype.findSample = function(selector) {
+  const rootSelector = \`.\${SampleWrapper.rootSelector}\`;
+  // casting to 'any' is needed to avoid this issue with generics
+  // https://github.com/microsoft/TypeScript/issues/29132
+  return (this as any).findComponent(selector ? appendSelector(selector, rootSelector) : rootSelector, SampleWrapper);
+};
+
+ElementWrapper.prototype.findAllSamples = function(selector) {
+  return this.findAllComponents(SampleWrapper, selector);
+};
+
+
+export default function wrapper(root: string = 'body') {
+  return new ElementWrapper(root);
+}
+"
+`;
