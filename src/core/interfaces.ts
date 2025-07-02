@@ -326,7 +326,7 @@ export interface CoreChartProps
   /**
    * Called when series/points visibility changes due to user interaction with legend or filter.
    */
-  onVisibleItemsChange?: (legendItems: readonly CoreLegendItem[]) => void;
+  onVisibleItemsChange?: (detail: VisibleItemsChangeDetail) => void;
   /**
    * Called whenever chart tooltip is rendered to provide content for tooltip's header, body, and (optional) footer.
    */
@@ -339,11 +339,11 @@ export interface CoreChartProps
   /**
    * Called whenever chart point or group is highlighted.
    */
-  onHighlight?(props: ChartHighlightProps): void;
+  onHighlight?(detail: HighlightChangeDetail): void;
   /**
    * Called whenever chart point or group loses highlight.
    */
-  onClearHighlight?(): void;
+  onClearHighlight?(detail: HighlightClearDetail): void;
   /**
    * Use Cloudscape keyboard navigation, `true` by default.
    */
@@ -453,9 +453,20 @@ export type InternalChartOptions = Omit<Highcharts.Options, "xAxis" | "yAxis"> &
 
 export type InternalXAxisOptions = Highcharts.XAxisOptions & { valueFormatter?: (value: null | number) => string };
 export type InternalYAxisOptions = Highcharts.YAxisOptions & { valueFormatter?: (value: null | number) => string };
-export interface ChartHighlightProps {
+
+export interface VisibleItemsChangeDetail {
+  items: readonly CoreLegendItem[];
+  isApiCall: boolean;
+}
+
+export interface HighlightChangeDetail {
   point: null | Highcharts.Point;
   group: readonly Highcharts.Point[];
+  isApiCall: boolean;
+}
+
+export interface HighlightClearDetail {
+  isApiCall: boolean;
 }
 
 // The API methods allow programmatic triggering of chart's behaviors, some of which are not accessible via React state.

@@ -5,7 +5,7 @@ import type Highcharts from "highcharts";
 
 import { getChartSeries } from "../../internal/utils/chart-series";
 import { ChartLabels } from "../i18n-utils";
-import { ChartHighlightProps, CoreLegendItem, Rect } from "../interfaces";
+import { HighlightChangeDetail, HighlightClearDetail, Rect, VisibleItemsChangeDetail } from "../interfaces";
 import { getGroupRect, isSeriesStacked } from "../utils";
 
 // Chart API context is used for dependency injection for chart utilities.
@@ -33,9 +33,9 @@ export namespace ChartExtraContext {
   }
 
   export interface Handlers {
-    onHighlight?(props: ChartHighlightProps): void;
-    onClearHighlight?(): void;
-    onVisibleItemsChange?: (legendItems: readonly CoreLegendItem[]) => void;
+    onHighlight?(detail: HighlightChangeDetail): void;
+    onClearHighlight?(detail: HighlightClearDetail): void;
+    onVisibleItemsChange?: (detail: VisibleItemsChangeDetail) => void;
   }
 
   export interface State {
