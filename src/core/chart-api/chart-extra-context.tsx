@@ -3,6 +3,7 @@
 
 import type Highcharts from "highcharts";
 
+import { getChartSeries } from "../../internal/utils/chart-series";
 import { ChartLabels } from "../i18n-utils";
 import { ChartHighlightProps, CoreLegendItem, Rect } from "../interfaces";
 import { getGroupRect, isSeriesStacked } from "../utils";
@@ -93,7 +94,8 @@ function computeDerivedState(chart: Highcharts.Chart): ChartExtraContext.Derived
     pointsByX.set(point.x, xPoints);
   };
   const compareX = (a: number, b: number) => a - b;
-  for (const s of chart.series) {
+
+  for (const s of getChartSeries(chart.series)) {
     const seriesX = new Set<number>();
     if (s.visible) {
       for (const d of s.data) {

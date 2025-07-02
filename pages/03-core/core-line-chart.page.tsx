@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import Highcharts from "highcharts";
 import { omit } from "lodash";
 
 import Button from "@cloudscape-design/components/button";
@@ -96,6 +97,7 @@ export default function () {
     >
       <CoreChart
         {...omit(chartProps.cartesian, "ref")}
+        highcharts={Highcharts}
         options={{
           lang: {
             accessibility: {
@@ -111,6 +113,11 @@ export default function () {
             },
           ],
           yAxis: [{ title: { text: "Events" } }],
+          chart: {
+            zooming: {
+              type: "x",
+            },
+          },
         }}
         chartHeight={400}
         tooltip={{ placement: "outside" }}
