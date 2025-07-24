@@ -108,6 +108,11 @@ export interface BaseNoDataOptions {
   onRecoveryClick?: NonCancelableEventHandler;
 }
 
+export interface BaseTooltipDetail {
+  key: React.ReactNode;
+  value: React.ReactNode;
+}
+
 export interface BaseI18nStrings {
   loadingText?: string;
   errorText?: string;
@@ -428,6 +433,7 @@ export namespace CoreChartProps {
   }
   export interface TooltipContentRenderer {
     point?: (props: TooltipPointProps) => TooltipPointFormatted;
+    details?: (props: TooltipDetailsProps) => readonly TooltipDetail[];
     header?: (props: TooltipSlotProps) => React.ReactNode;
     body?: (props: TooltipSlotProps) => React.ReactNode;
     footer?: (props: TooltipSlotProps) => React.ReactNode;
@@ -444,6 +450,12 @@ export namespace CoreChartProps {
     x: number;
     items: TooltipContentItem[];
   }
+
+  export interface TooltipDetailsProps {
+    point: Highcharts.Point;
+  }
+
+  export type TooltipDetail = BaseTooltipDetail;
 
   export interface LegendItemHighlightDetail {
     item: LegendItem;
